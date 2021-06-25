@@ -8,6 +8,7 @@ export default class EmptyListPlaceholder extends Component<EmptyListPlaceholder
         return (
             <EmptyListPlaceholderComponent
                 listClass={this.props.listClass ? this.props.listClass : ""}
+                includeParent={this.props.includeParent}
                 placeholder={this.props.placeholder ? this.props.placeholder : <div />}
             />
         );
