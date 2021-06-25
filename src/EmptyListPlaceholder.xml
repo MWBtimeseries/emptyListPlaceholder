@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget id="timeseries.emptylistplaceholder.EmptyListPlaceholder" pluginWidget="true" needsEntityContext="true" offlineCapable="true"
+        supportedPlatform="Web"
+        xmlns="http://www.mendix.com/widget/1.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.mendix.com/widget/1.0/ ../node_modules/mendix/custom_widget.xsd">
+    <name>Empty List Placeholder</name>
+    <description>Empty list placeholder</description>
+    <icon/>
+    <properties>
+        <propertyGroup caption="General">
+            <property key="listClass" type="string" required="false">
+                <caption>ListView class</caption>
+                <description />
+            </property>
+            <property key="includeParent" type="boolean" defaultValue="false">
+                <caption>Include parent</caption>
+                <description>Replace listView and parent element when listview is empty</description>
+            </property>
+            <property key="placeholder" type="widgets" required="true">
+                <caption>placeholder for empty list</caption>
+                <description />
+            </property>
+        </propertyGroup>
+    </properties>
+</widget>
