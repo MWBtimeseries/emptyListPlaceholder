@@ -11,9 +11,10 @@ export class EmptyListPlaceholderComponent extends Component<EmptyListComponentP
     componentId = "EmptyList" + Math.floor(Math.random() * 1000000);
 
     componentDidMount(): void {
-        let element = document.querySelector("." + this.props.listClass) as HTMLElement;
-        if (this.props.includeParent) {
-            element = element.parentElement as HTMLElement;
+        const listView = document.querySelector("." + this.props.listClass) as HTMLElement;
+        const element = this.props.includeParent ? listView.parentElement : listView;
+        if (!element) {
+            return;
         }
         const displayType = element.style.display;
         element.style.display = "none";
@@ -22,7 +23,7 @@ export class EmptyListPlaceholderComponent extends Component<EmptyListComponentP
             for (const mutation of mutationsList) {
                 if (mutation.type === "childList") {
                     const placeholder = document.getElementById(this.componentId) as HTMLElement;
-                    if (element?.querySelector(".mx-listview-empty")) {
+                    if (this.displayPlaceholder(listView)) {
                         placeholder.style.display = "block";
                         element.style.display = "none";
                     } else {
@@ -34,6 +35,16 @@ export class EmptyListPlaceholderComponent extends Component<EmptyListComponentP
         };
         this.observer = new MutationObserver(callback);
         this.observer.observe(element, config);
+    }
+
+    displayPlaceholder(listView: HTMLElement): boolean {
+        if (listView.classList.contains("mx-listview") && listView?.querySelector(".mx-listview-empty")) {
+            return true;
+        }
+        if (listView.classList.contains("mx-templategrid") && listView?.querySelector(".mx-templategrid-empty")) {
+            return true;
+        }
+        return false;
     }
 
     componentWillUnmount(): void {
