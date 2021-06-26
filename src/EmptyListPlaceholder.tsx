@@ -3,6 +3,8 @@ import { EmptyListPlaceholderComponent } from "./components/EmptyListPlaceholder
 
 import { EmptyListPlaceholderContainerProps } from "../typings/EmptyListPlaceholderProps";
 
+import "./ui/EmptyListPlacholder.css";
+
 export default class EmptyListPlaceholder extends Component<EmptyListPlaceholderContainerProps> {
     render(): ReactNode {
         return (

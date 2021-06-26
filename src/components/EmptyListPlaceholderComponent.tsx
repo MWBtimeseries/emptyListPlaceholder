@@ -31,6 +31,7 @@ export class EmptyListPlaceholderComponent extends Component<EmptyListComponentP
                         element.style.display = displayType;
                     }
                 }
+                break;
             }
         };
         this.observer = new MutationObserver(callback);
@@ -38,13 +39,10 @@ export class EmptyListPlaceholderComponent extends Component<EmptyListComponentP
     }
 
     displayPlaceholder(listView: HTMLElement): boolean {
-        if (listView.classList.contains("mx-listview") && listView?.querySelector(".mx-listview-empty")) {
-            return true;
-        }
-        if (listView.classList.contains("mx-templategrid") && listView?.querySelector(".mx-templategrid-empty")) {
-            return true;
-        }
-        return false;
+        return !!(
+            (listView.classList.contains("mx-listview") && listView?.querySelector(".mx-listview-empty")) ||
+            (listView.classList.contains("mx-templategrid") && listView?.querySelector(".mx-templategrid-empty"))
+        );
     }
 
     componentWillUnmount(): void {
