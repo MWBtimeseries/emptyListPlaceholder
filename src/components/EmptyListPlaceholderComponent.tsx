@@ -12,8 +12,13 @@ export class EmptyListPlaceholderComponent extends Component<EmptyListComponentP
 
     componentDidMount(): void {
         const listView = document.querySelector("." + this.props.listClass) as HTMLElement;
+        if (!listView) {
+            console.error("EmptyListPlaceholder: No element found with class " + this.props.listClass);
+            return;
+        }
         const element = this.props.includeParent ? listView.parentElement : listView;
         if (!element) {
+            console.error("EmptyListPlaceholder: Element with class " + this.props.listClass + "has no parent element");
             return;
         }
         const displayType = element.style.display;
