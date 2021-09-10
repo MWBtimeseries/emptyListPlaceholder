@@ -6,12 +6,14 @@ import { EmptyListPlaceholderContainerProps } from "../typings/EmptyListPlacehol
 import "./ui/EmptyListPlacholder.css";
 
 export default class EmptyListPlaceholder extends Component<EmptyListPlaceholderContainerProps> {
+
     render(): ReactNode {
         return (
             <EmptyListPlaceholderComponent
                 listClass={this.props.listClass ? this.props.listClass : ""}
                 includeParent={this.props.includeParent}
                 placeholder={this.props.placeholder ? this.props.placeholder : <div />}
+                widgetMode={this.props.widgetMode}
             />
         );
     }

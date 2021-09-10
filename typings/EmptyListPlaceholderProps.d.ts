@@ -5,11 +5,14 @@
  */
 import { ComponentType, CSSProperties, ReactNode } from "react";
 
+export type WidgetModeEnum = "hide" | "show";
+
 export interface EmptyListPlaceholderContainerProps {
     name: string;
     class: string;
     style?: CSSProperties;
     tabIndex?: number;
+    widgetMode: WidgetModeEnum;
     listClass: string;
     includeParent: boolean;
     placeholder: ReactNode;
@@ -18,6 +21,7 @@ export interface EmptyListPlaceholderContainerProps {
 export interface EmptyListPlaceholderPreviewProps {
     class: string;
     style: string;
+    widgetMode: WidgetModeEnum;
     listClass: string;
     includeParent: boolean;
     placeholder: { widgetCount: number; renderer: ComponentType };

@@ -4,6 +4,7 @@ export interface EmptyListComponentProps {
     listClass: string;
     includeParent: boolean;
     placeholder: ReactFragment;
+    widgetMode: string;
 }
 
 export class EmptyListPlaceholderComponent extends Component<EmptyListComponentProps> {
@@ -23,22 +24,24 @@ export class EmptyListPlaceholderComponent extends Component<EmptyListComponentP
         }
         const displayType = element.style.display;
         element.style.display = "none";
-        const config = { attributes: true, childList: true, subtree: true };
         const callback = (mutationsList: any): void => {
             for (const mutation of mutationsList) {
                 if (mutation.type === "childList") {
                     const placeholder = document.getElementById(this.componentId) as HTMLElement;
                     if (this.displayPlaceholder(listView)) {
-                        placeholder.style.display = "block";
+                        placeholder.style.display =  this.props.widgetMode === "show" ? "block" : "none";
                         element.style.display = "none";
                     } else {
-                        placeholder.style.display = "none";
-                        element.style.display = displayType;
+                        placeholder.style.display =  this.props.widgetMode === "show" ? "none" : "block";
+                        if (displayType !== "none") {
+                            element.style.display = displayType;
+                        }
                     }
                 }
                 break;
             }
         };
+        const config = { attributes: true, childList: true, subtree: true };
         this.observer = new MutationObserver(callback);
         this.observer.observe(element, config);
     }

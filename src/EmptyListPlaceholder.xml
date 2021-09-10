@@ -8,6 +8,14 @@
     <icon/>
     <properties>
         <propertyGroup caption="General">
+            <property key="widgetMode" type="enumeration" defaultValue="hide">
+                <caption>Show/hide widget content</caption>
+                <description>Show/hide widget content when the list is empty. The list itself will always be hidden when empty.</description>
+                <enumerationValues>
+                    <enumerationValue key="hide">Hide</enumerationValue>
+                    <enumerationValue key="show">Show</enumerationValue>
+                </enumerationValues>
+            </property>
             <property key="listClass" type="string" required="false">
                 <caption>ListView class</caption>
                 <description />
