@@ -28,11 +28,11 @@ export class EmptyListPlaceholderComponent extends Component<EmptyListComponentP
             for (const mutation of mutationsList) {
                 if (mutation.type === "childList") {
                     const placeholder = document.getElementById(this.componentId) as HTMLElement;
-                    if (this.displayPlaceholder(listView)) {
-                        placeholder.style.display =  this.props.widgetMode === "notemptylist" ? "block" : "none";
+                    if (this.isEmptyList(listView)) {
+                        placeholder.style.display =  this.props.widgetMode === "emptylist" ? "block" : "none";
                         element.style.display = "none";
                     } else {
-                        placeholder.style.display =  this.props.widgetMode === "notemptylist" ? "none" : "block";
+                        placeholder.style.display =  this.props.widgetMode === "notemptylist" ? "block" : "none";
                         if (displayType !== "none") {
                             element.style.display = displayType;
                         }
@@ -46,7 +46,7 @@ export class EmptyListPlaceholderComponent extends Component<EmptyListComponentP
         this.observer.observe(element, config);
     }
 
-    displayPlaceholder(listView: HTMLElement): boolean {
+    isEmptyList(listView: HTMLElement): boolean {
         return !!(
             (listView.classList.contains("mx-listview") && listView?.querySelector(".mx-listview-empty")) ||
             (listView.classList.contains("mx-templategrid") && listView?.querySelector(".mx-templategrid-empty"))
