@@ -5,7 +5,7 @@
  */
 import { ComponentType, CSSProperties, ReactNode } from "react";
 
-export type WidgetModeEnum = "hide" | "show";
+export type WidgetModeEnum = "emptylist" | "notemptylist";
 
 export interface EmptyListPlaceholderContainerProps {
     name: string;

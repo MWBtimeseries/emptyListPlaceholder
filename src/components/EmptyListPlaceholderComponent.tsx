@@ -29,10 +29,10 @@ export class EmptyListPlaceholderComponent extends Component<EmptyListComponentP
                 if (mutation.type === "childList") {
                     const placeholder = document.getElementById(this.componentId) as HTMLElement;
                     if (this.displayPlaceholder(listView)) {
-                        placeholder.style.display =  this.props.widgetMode === "show" ? "block" : "none";
+                        placeholder.style.display =  this.props.widgetMode === "notemptylist" ? "block" : "none";
                         element.style.display = "none";
                     } else {
-                        placeholder.style.display =  this.props.widgetMode === "show" ? "none" : "block";
+                        placeholder.style.display =  this.props.widgetMode === "notemptylist" ? "none" : "block";
                         if (displayType !== "none") {
                             element.style.display = displayType;
                         }

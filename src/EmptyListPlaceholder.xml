@@ -8,21 +8,21 @@
     <icon/>
     <properties>
         <propertyGroup caption="General">
-            <property key="widgetMode" type="enumeration" defaultValue="hide">
-                <caption>Show/hide widget content</caption>
-                <description>Show/hide widget content when the list is empty. The list itself will always be hidden when empty.</description>
+            <property key="widgetMode" type="enumeration" defaultValue="emptylist">
+                <caption>Show widget content</caption>
+                <description>Show widget content when the list is empty or not empty. The list itself will always be hidden when empty.</description>
                 <enumerationValues>
-                    <enumerationValue key="hide">Hide</enumerationValue>
-                    <enumerationValue key="show">Show</enumerationValue>
+                    <enumerationValue key="emptylist">when list is empty</enumerationValue>
+                    <enumerationValue key="notemptylist">when list is not empty</enumerationValue>
                 </enumerationValues>
             </property>
             <property key="listClass" type="string" required="false">
                 <caption>ListView class</caption>
-                <description />
+                <description>Class of the list that the widget listens to.</description>
             </property>
             <property key="includeParent" type="boolean" defaultValue="false">
                 <caption>Include parent</caption>
-                <description>Replace listView and parent element when listview is empty</description>
+                <description>Replace listView and parent element when listview is empty.</description>
             </property>
             <property key="placeholder" type="widgets" required="true">
                 <caption>placeholder for empty list</caption>
