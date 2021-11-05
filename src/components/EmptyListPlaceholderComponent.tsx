@@ -1,4 +1,4 @@
-import { Component, ReactNode, createElement, ReactFragment } from "react";
+import { createElement, ReactFragment, useEffect } from "react";
 
 export interface EmptyListComponentProps {
     listClass: string;
@@ -7,32 +7,35 @@ export interface EmptyListComponentProps {
     widgetMode: string;
 }
 
-export class EmptyListPlaceholderComponent extends Component<EmptyListComponentProps> {
-    observer!: MutationObserver;
-    componentId = "EmptyList" + Math.floor(Math.random() * 1000000);
+const EmptyListPlaceholderComponent = (props: EmptyListComponentProps): JSX.Element => {
+    const componentId = "EmptyList" + Math.floor(Math.random() * 1000000);
 
-    componentDidMount(): void {
-        const listView = document.querySelector("." + this.props.listClass) as HTMLElement;
+    useEffect(() => {
+        const listView = document.querySelector("." + props.listClass) as HTMLElement;
+
         if (!listView) {
-            console.error("EmptyListPlaceholder: No element found with class " + this.props.listClass);
+            console.error("EmptyListPlaceholder: No element found with class " + props.listClass);
             return;
         }
-        const element = this.props.includeParent ? listView.parentElement : listView;
+
+        const element = props.includeParent ? listView.parentElement : listView;
         if (!element) {
-            console.error("EmptyListPlaceholder: Element with class " + this.props.listClass + "has no parent element");
+            console.error("EmptyListPlaceholder: Element with class " + props.listClass + "has no parent element");
             return;
         }
+
         const displayType = element.style.display;
         element.style.display = "none";
+
         const callback = (mutationsList: any): void => {
             for (const mutation of mutationsList) {
                 if (mutation.type === "childList") {
-                    const placeholder = document.getElementById(this.componentId) as HTMLElement;
-                    if (this.isEmptyList(listView)) {
-                        placeholder.style.display =  this.props.widgetMode === "emptylist" ? "block" : "none";
+                    const placeholder = document.getElementById(componentId) as HTMLElement;
+                    if (isEmptyList(listView)) {
+                        placeholder.style.display =  props.widgetMode === "emptylist" ? "block" : "none";
                         element.style.display = "none";
                     } else {
-                        placeholder.style.display =  this.props.widgetMode === "notemptylist" ? "block" : "none";
+                        placeholder.style.display =  props.widgetMode === "notemptylist" ? "block" : "none";
                         if (displayType !== "none") {
                             element.style.display = displayType;
                         }
@@ -42,24 +45,24 @@ export class EmptyListPlaceholderComponent extends Component<EmptyListComponentP
             }
         };
         const config = { attributes: true, childList: true, subtree: true };
-        this.observer = new MutationObserver(callback);
-        this.observer.observe(element, config);
-    }
+        const observer = new MutationObserver(callback);
+        observer.observe(element, config);
 
-    isEmptyList(listView: HTMLElement): boolean {
+        return () => {
+            if (observer) {
+                observer.disconnect();
+            }
+        };
+    }, []);
+
+    const isEmptyList = (listView: HTMLElement): boolean => {
         return !!(
             (listView.classList.contains("mx-listview") && listView?.querySelector(".mx-listview-empty")) ||
             (listView.classList.contains("mx-templategrid") && listView?.querySelector(".mx-templategrid-empty"))
         );
-    }
+    };
 
-    componentWillUnmount(): void {
-        if (this.observer) {
-            this.observer.disconnect();
-        }
-    }
+    return <div id={componentId}>{props.placeholder}</div>;
+};
 
-    render(): ReactNode {
-        return <div id={this.componentId}>{this.props.placeholder}</div>;
-    }
-}
+export default EmptyListPlaceholderComponent;

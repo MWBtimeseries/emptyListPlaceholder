@@ -1,20 +1,19 @@
-import { Component, ReactNode, createElement } from "react";
-import { EmptyListPlaceholderComponent } from "./components/EmptyListPlaceholderComponent";
+import { createElement } from "react";
+import EmptyListPlaceholderComponent from "./components/EmptyListPlaceholderComponent";
 
 import { EmptyListPlaceholderContainerProps } from "../typings/EmptyListPlaceholderProps";
 
 import "./ui/EmptyListPlacholder.css";
 
-export default class EmptyListPlaceholder extends Component<EmptyListPlaceholderContainerProps> {
+const EmptyListPlaceholder = (props: EmptyListPlaceholderContainerProps): JSX.Element => {
+    return (
+        <EmptyListPlaceholderComponent
+            listClass={props.listClass ? props.listClass : ""}
+            includeParent={props.includeParent}
+            placeholder={props.placeholder ? props.placeholder : <div />}
+            widgetMode={props.widgetMode}
+        />
+    );
+};
 
-    render(): ReactNode {
-        return (
-            <EmptyListPlaceholderComponent
-                listClass={this.props.listClass ? this.props.listClass : ""}
-                includeParent={this.props.includeParent}
-                placeholder={this.props.placeholder ? this.props.placeholder : <div />}
-                widgetMode={this.props.widgetMode}
-            />
-        );
-    }
-}
+export default EmptyListPlaceholder;
