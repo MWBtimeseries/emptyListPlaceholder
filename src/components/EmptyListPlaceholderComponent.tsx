@@ -1,4 +1,4 @@
-import { createElement, ReactFragment, useEffect } from "react";
+import { createElement, ReactFragment, useEffect, useRef } from "react";
 
 export interface EmptyListComponentProps {
     listClass: string;
@@ -8,7 +8,7 @@ export interface EmptyListComponentProps {
 }
 
 const EmptyListPlaceholderComponent = (props: EmptyListComponentProps): JSX.Element => {
-    const componentId = "EmptyList" + Math.floor(Math.random() * 1000000);
+    const placeholderRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const listView = document.querySelector("." + props.listClass) as HTMLElement;
@@ -30,12 +30,12 @@ const EmptyListPlaceholderComponent = (props: EmptyListComponentProps): JSX.Elem
         const callback = (mutationsList: any): void => {
             for (const mutation of mutationsList) {
                 if (mutation.type === "childList") {
-                    const placeholder = document.getElementById(componentId) as HTMLElement;
+                    const placeholder = placeholderRef.current as HTMLElement;
                     if (isEmptyList(listView)) {
-                        placeholder.style.display =  props.widgetMode === "emptylist" ? "block" : "none";
+                        placeholder.style.display = props.widgetMode === "emptylist" ? "block" : "none";
                         element.style.display = "none";
                     } else {
-                        placeholder.style.display =  props.widgetMode === "notemptylist" ? "block" : "none";
+                        placeholder.style.display = props.widgetMode === "notemptylist" ? "block" : "none";
                         if (displayType !== "none") {
                             element.style.display = displayType;
                         }
@@ -62,7 +62,7 @@ const EmptyListPlaceholderComponent = (props: EmptyListComponentProps): JSX.Elem
         );
     };
 
-    return <div id={componentId}>{props.placeholder}</div>;
+    return <div ref={placeholderRef}>{props.placeholder}</div>;
 };
 
 export default EmptyListPlaceholderComponent;
