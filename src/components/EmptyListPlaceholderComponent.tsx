@@ -10,8 +10,20 @@ export interface EmptyListComponentProps {
 const EmptyListPlaceholderComponent = (props: EmptyListComponentProps): JSX.Element => {
     const placeholderRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        const listView = document.querySelector("." + props.listClass) as HTMLElement;
+    useEffect((): void => {
+        function setVisibility() {
+            const placeholder = placeholderRef.current as HTMLElement;
+            if (isEmptyList(listView)) {
+                placeholder.style.display = props.widgetMode === "emptylist" ? "block" : "none";
+                element!.style.display = "none";
+            } else {
+                placeholder.style.display = props.widgetMode === "notemptylist" ? "block" : "none";
+                element!.style.display = displayType;
+            }
+        }
+
+        const listViews = document.querySelectorAll("." + props.listClass);
+        const listView = listViews[listViews.length - 1] as HTMLElement;
 
         if (!listView) {
             console.error("EmptyListPlaceholder: No element found with class " + props.listClass);
@@ -30,16 +42,7 @@ const EmptyListPlaceholderComponent = (props: EmptyListComponentProps): JSX.Elem
         const callback = (mutationsList: any): void => {
             for (const mutation of mutationsList) {
                 if (mutation.type === "childList") {
-                    const placeholder = placeholderRef.current as HTMLElement;
-                    if (isEmptyList(listView)) {
-                        placeholder.style.display = props.widgetMode === "emptylist" ? "block" : "none";
-                        element.style.display = "none";
-                    } else {
-                        placeholder.style.display = props.widgetMode === "notemptylist" ? "block" : "none";
-                        if (displayType !== "none") {
-                            element.style.display = displayType;
-                        }
-                    }
+                    setVisibility();
                 }
                 break;
             }
