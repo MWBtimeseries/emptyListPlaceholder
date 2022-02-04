@@ -37,7 +37,7 @@ const EmptyListPlaceholderComponent = (props: EmptyListComponentProps): JSX.Elem
         }
 
         const displayType = element.style.display;
-        element.style.display = "none";
+        // element.style.display = "none";
 
         const callback = (mutationsList: any): void => {
             for (const mutation of mutationsList) {
