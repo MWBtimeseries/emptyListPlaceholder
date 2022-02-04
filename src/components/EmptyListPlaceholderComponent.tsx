@@ -10,8 +10,8 @@ export interface EmptyListComponentProps {
 const EmptyListPlaceholderComponent = (props: EmptyListComponentProps): JSX.Element => {
     const placeholderRef = useRef<HTMLDivElement>(null);
 
-    useEffect((): void => {
-        function setVisibility() {
+    useEffect(() => {
+        function setVisibility(): void {
             const placeholder = placeholderRef.current as HTMLElement;
             if (isEmptyList(listView)) {
                 placeholder.style.display = props.widgetMode === "emptylist" ? "block" : "none";
